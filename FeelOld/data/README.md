@@ -1,3 +1,4 @@
+"""
 Explanation of variables in data file:
 
 ageFeel: People were asked how old they feel, regardless of actual age, on a scale of 1 (very young) to 7 (very old)
@@ -13,4 +14,6 @@ gender: What is your gender?
 numChild: How many children do you have?
 
 Asked US participants on Amazon Mechanical Turk, dropped a few people for answering nonsense. 
-
+"""
+--------------------------------
+Thanks to tomeru (GitHub) for the data set

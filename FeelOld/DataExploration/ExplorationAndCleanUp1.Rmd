@@ -1,0 +1,53 @@
+---
+title: "Exploratory Analysis & Clean-Up 1"
+output: html_notebook
+---
+
+# Load the Data
+```{r}
+WORKING_DIR <- "../data/feelingOld.csv"
+responses <- read.csv(WORKING_DIR, header = TRUE, sep=",")
+summary(responses)
+dim(responses)
+```
+# Drop Columns and Clean Up
+```{r}
+responses <- responses[-1]
+summary(responses)
+dim(responses)
+names(responses)
+genders <- (tolower(responses$gender))
+summary(as.factor(genders))
+genders[startsWith(genders, "f")] = "female"
+genders[startsWith(genders, "m")] = "male"
+genders <- as.factor(genders)
+summary(genders)
+```
+# Observe Correlations
+```{r}
+responses$gender <- genders
+summary(responses)
+pairs(responses)
+cor(responses[-5])
+```
+# 
+```{r}
+plot(responses$numChild, responses$ageFeel, main = "How Old You Feel Vs. Number of Children", xlab = "Number of Children", ylab = "How Old You Feel")
+old_vs_kids
+hist(responses$ageFeel, main = "How Old Do You Feel? (1-7)", xlab = "Age You Feel")
+summary(as.factor(responses$ageFeel))
+```
+# Outliers?
+```{r}
+sorted_old_begin <- sort(responses$oldBegin)
+sorted_old_really <- sort(responses$oldReally)
+sorted_old_begin[1:10]
+sorted_old_really[1:10]
+```
+
+
+```{r}
+age_vs_oldBegin.fit <- lm(responses$oldBegin ~ responses$age)
+summary(age_vs_oldBegin.fit)
+```
+
