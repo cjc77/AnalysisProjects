@@ -30,12 +30,13 @@ summary(responses)
 pairs(responses)
 cor(responses[-5])
 ```
-# 
+# Play Around With the Data
 ```{r}
-plot(responses$numChild, responses$ageFeel, main = "How Old You Feel Vs. Number of Children", xlab = "Number of Children", ylab = "How Old You Feel")
-old_vs_kids
-hist(responses$ageFeel, main = "How Old Do You Feel? (1-7)", xlab = "Age You Feel")
 summary(as.factor(responses$ageFeel))
+plot(responses$numChild, responses$ageFeel, main = "Age Feel Vs. Number of Children", xlab = "Number of Children", ylab = "Age Feel")
+hist(responses$ageFeel, main = "How Old Do You Feel? (1-7)", xlab = "Age You Feel")
+plot(responses$oldBegin, responses$age, main = "Age vs. ", xlab = "Number of Children", ylab = "How Old You Feel")
+plot(responses$age, responses$oldBegin)
 ```
 # Outliers?
 ```{r}
@@ -44,10 +45,30 @@ sorted_old_really <- sort(responses$oldReally)
 sorted_old_begin[1:10]
 sorted_old_really[1:10]
 ```
-
-
+# Linear Model (age ~ .)
 ```{r}
-age_vs_oldBegin.fit <- lm(responses$oldBegin ~ responses$age)
-summary(age_vs_oldBegin.fit)
+oldBegin_lm.fit1 <- lm(responses$oldBegin ~ ., data = responses)
+plot(oldBegin_lm.fit1)
+summary(oldBegin_lm.fit1)
 ```
 
+
+# Linear Model (oldBegin ~  age + oldReally)
+```{r}
+oldBegin_lm.fit2 <- lm(oldBegin ~ age + oldReally, data = responses)
+plot(oldBegin_lm.fit2)
+summary(oldBegin_lm.fit2)
+```
+# Linear Model (oldBegin ~  age + oldReally), drop observation 173
+```{r}
+responses_ <- responses[-173,]
+oldBegin_lm.fit3 <- lm(oldBegin ~ age + oldReally, data = responses_)
+plot(oldBegin_lm.fit3)
+summary(oldBegin_lm.fit3)
+```
+# Linear Model (oldBegin ~  age * oldReally)
+```{r}
+oldBegin_lm.fit4 <- lm(oldBegin ~ age * oldReally, data = responses_)
+plot(oldBegin_lm.fit4)
+summary(oldBegin_lm.fit4)
+```
